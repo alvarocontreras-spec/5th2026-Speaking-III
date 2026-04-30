@@ -1,50 +1,56 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SPEAKING TASK: DOWNLOAD & SUBMIT</title>
+    <title>5th Grade Speaking Task: Presentation Coach</title>
     <style>
-        :root {
-            --primary: #2980b9;
-            --accent: #d35400;
-            --success: #27ae60;
-            --error: #e74c3c;
-            --bg: #f4f7f6;
+        :root { 
+            --primary: #2980b9; 
+            --accent: #d35400; 
+            --success: #27ae60; 
+            --error: #e74c3c; 
+            --bg: #f4f7f6; 
         }
-
-        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); padding: 10px; display: flex; justify-content: center; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--bg); padding: 10px; display: flex; justify-content: center; }
         .container { max-width: 850px; width: 100%; background: white; padding: 25px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
         
         header { text-align: center; border-bottom: 4px solid var(--primary); margin-bottom: 20px; padding-bottom: 10px; }
-        .instr-es { font-style: italic; color: #7f8c8d; font-size: 0.85rem; }
+        h1 { color: #2c3e50; margin: 0; font-size: 1.6rem; }
+        .instr-es { font-style: italic; color: #7f8c8d; font-size: 0.85rem; margin-top: 5px; }
 
         .video-card { background: #34495e; color: white; padding: 15px; border-radius: 12px; text-align: center; margin-bottom: 20px; }
-        .video-btn { display: inline-block; background: var(--error); color: white; padding: 10px 20px; text-decoration: none; border-radius: 50px; font-weight: bold; }
+        .video-btn { display: inline-block; background: var(--error); color: white; padding: 10px 25px; text-decoration: none; border-radius: 50px; font-weight: bold; transition: 0.3s; }
+        .video-btn:hover { transform: scale(1.05); background: #c0392b; }
 
-        .toolbox { background: #eaf2f8; border: 2px solid #3498db; padding: 15px; border-radius: 10px; margin-bottom: 20px; }
+        /* LANGUAGE TOOLBOX */
+        .toolbox { background: #eaf2f8; border: 2px solid #3498db; padding: 15px; border-radius: 10px; margin-bottom: 25px; }
         .tool-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
         .tool-column { background: white; padding: 10px; border-radius: 8px; font-size: 0.85rem; border: 1px solid #d6eaf8; }
+        .tool-column b { color: var(--primary); display: block; margin-bottom: 5px; text-transform: uppercase; font-size: 0.75rem; }
 
         .section-title { color: var(--primary); font-weight: bold; text-transform: uppercase; margin-top: 25px; display: block; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-bottom: 15px; }
         .step-item { background: #f9f9f9; padding: 15px; border-radius: 8px; margin-bottom: 12px; border: 1px solid #eee; }
         
-        input, textarea, select { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; font-family: inherit; }
+        input, textarea, select { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; font-family: inherit; font-size: 14px; margin-bottom: 10px; }
 
+        /* SCRIPT CONSOLIDATION BOX */
         .script-container { background: #fff9e6; border: 2px solid #f39c12; padding: 20px; border-radius: 12px; margin-top: 25px; }
-        #finalScript { background: white; padding: 15px; border-radius: 8px; border: 1px solid #f39c12; min-height: 80px; font-size: 1.1rem; line-height: 1.5; color: #2c3e50; }
+        #finalScript { background: white; padding: 15px; border-radius: 8px; border: 1px solid #f39c12; min-height: 80px; font-size: 1.1rem; line-height: 1.5; color: #2c3e50; white-space: pre-wrap; }
 
+        /* RECORDING UI */
         .recording-box { background: #fff; border: 3px solid #eee; padding: 20px; border-radius: 15px; text-align: center; margin-top: 20px; }
-        #timer { font-size: 3rem; font-weight: bold; color: #bdc3c7; font-family: monospace; }
+        #timer { font-size: 3.5rem; font-weight: bold; color: #bdc3c7; font-family: 'Courier New', Courier, monospace; margin-bottom: 10px; }
         .timer-good { color: var(--success) !important; }
         .timer-long { color: var(--error) !important; }
-
-        .record-btn { background: var(--error); color: white; border: none; padding: 15px 40px; border-radius: 50px; font-weight: bold; cursor: pointer; font-size: 1.1rem; }
+        
+        .record-btn { background: var(--error); color: white; border: none; padding: 15px 45px; border-radius: 50px; font-weight: bold; cursor: pointer; font-size: 1.1rem; transition: 0.3s; }
         .record-btn.recording { animation: pulse 1.5s infinite; background: #c0392b; }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
         
-        audio { width: 100%; margin-top: 15px; }
-        .btn-submit { width: 100%; padding: 18px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; background: var(--success); color: white; font-size: 1.2rem; margin-top: 30px; box-shadow: 0 4px 0 #219150; }
+        audio { width: 100%; margin-top: 20px; }
+        .btn-submit { width: 100%; padding: 20px; border: none; border-radius: 12px; font-weight: bold; cursor: pointer; background: var(--success); color: white; font-size: 1.2rem; margin-top: 30px; box-shadow: 0 4px 0 #219150; }
+        .btn-submit:active { transform: translateY(3px); box-shadow: none; }
     </style>
 </head>
 <body>
@@ -52,7 +58,7 @@
 <div class="container">
     <header>
         <h1>🎤 SPEAKING CHALLENGE: ABBY'S TIPS</h1>
-        <p class="instr-es">Completa tu guion, graba tu audio y descarga todo al final.</p>
+        <p class="instr-es">Mira el video, completa tu guion y graba tu audio (30-60 segundos).</p>
     </header>
 
     <div class="video-card">
@@ -62,144 +68,112 @@
     <div class="toolbox">
         <div class="tool-grid">
             <div class="tool-column">
-                <b>➕ Connectors:</b> And, Also, Moreover, In addition.
+                <b>➕ Connectors (Addition):</b>
+                And, Also, Moreover, In addition.
             </div>
             <div class="tool-column">
-                <b>🔄 Contrast & Adverbs:</b> But, Always, Usually, Sometimes.
+                <b>🔄 Contrast & Adverbs:</b>
+                But (pero), Always, Usually, Sometimes, Never.
             </div>
         </div>
     </div>
 
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px;">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
         <select id="courseSelect" onchange="updateStudentList()"><option value="">-- Class --</option></select>
         <select id="studentSelect" disabled><option value="">-- Name --</option></select>
     </div>
 
-    <span class="section-title">Step 1: Your Notes</span>
+    <span class="section-title">Step 1: Complete your notes</span>
     <div class="step-item">
-        <input type="text" id="tip1" oninput="consolidate()" placeholder="Abby always says..." style="margin-bottom:10px;">
-        <input type="text" id="tip2" oninput="consolidate()" placeholder="Moreover, she suggests..." style="margin-bottom:10px;">
-        <input type="text" id="tip3" oninput="consolidate()" placeholder="In addition, it is important to..." style="margin-bottom:10px;">
-        <textarea id="reflectionBox" oninput="consolidate()" placeholder="I usually practice with... but sometimes..."></textarea>
+        <input type="text" id="tip1" oninput="consolidate()" placeholder="Tip 1: Abby always says...">
+        <input type="text" id="tip2" oninput="consolidate()" placeholder="Tip 2: Moreover, she suggests...">
+        <input type="text" id="tip3" oninput="consolidate()" placeholder="Tip 3: In addition, it is important to...">
+        <textarea id="reflectionBox" oninput="consolidate()" placeholder="In my opinion, I usually practice with... but sometimes I..."></textarea>
     </div>
 
     <div class="script-container">
-        <h3 style="margin-top:0; color:#d35400; font-size:1rem;">📝 YOUR SPEAKING SCRIPT (Read this!):</h3>
+        <h3 style="margin-top:0; color:#d35400; font-size:1rem; text-transform: uppercase;">📝 Your Speaking Script (Ready to record):</h3>
         <div id="finalScript">Start writing to generate your script...</div>
     </div>
 
-    <span class="section-title">Step 2: Record & Download</span>
+    <span class="section-title">Step 2: Voice Recording (30-60s)</span>
     <div class="recording-box">
         <div id="timer">00:00</div>
         <button id="recordBtn" class="record-btn">🔴 START RECORDING</button>
         <audio id="audioPlayback" controls style="display:none;"></audio>
-        <p id="recordStatus" style="margin-top:10px; color:#7f8c8d;">Goal: 30-60 seconds</p>
+        <p id="recordStatus" style="margin-top:15px; color:#7f8c8d; font-weight: bold;">Goal: Reach the green time!</p>
     </div>
 
     <button id="submitBtn" class="btn-submit" onclick="finalSubmission()">SUBMIT & DOWNLOAD ALL</button>
 </div>
 
 <script>
-    let mediaRecorder;
-    let audioChunks = [];
-    let duration = 0;
-    let timerInterval;
-    let audioBlob;
-
-    const database = { 
-        "5thA": ["ARANEDA SEPÚLVEDA MATÍAS SANTIAGO", "AYALA OLIVARES MÁXIMO ALONSO", "CAMPUSANO PÉREZ ISIDORA MONTSERRAT", "CANESSA VEGA BERNARDO FRANCISCO", "CARRASCO RAMÍREZ JAVIERA PAZ", "CHAMORRO SAN MARTÍN SEBASTIÁN FRANCISCO", "CORREA LEAL SANTIAGO LEÓN", "CUKIC LUENGO BRUNO EDUARDO", "ESPINOZA OLIVARES LUCAS ALEJANDRO", "FERNÁNDEZ ESCOBAR MARTÍN FELIPE", "FERNÁNDEZ RODRIGUEZ FERNANDA NICOLE", "GARNIER VELÁSQUEZ MAXIMILIANO LORENZO", "GARZON MACUER AMANDA SOFÍA", "GONZÁLEZ ARRIAGADA SOFÍA ISIDORA", "IBARRA BARRAZA DOMINGA PAZ", "JARAMILLO CANALES JULIETA ANTONIA", "JIMÉNEZ MONSALVES FERNANDA PAZ", "MACUADA GONZÁLEZ TOMÁS ALONSO", "MEZA MISTO FRANCISCA IGNACIA", "MUÑOZ OLIVOS SOFÍA ANTONIA", "NECULQUEO MURA JAVIER MATIAS", "OSORIO MUÑOZ LUCIANO", "PARRA ALIAGA AGUSTÍN CLEMENTE LEÓN", "RIQUELME CONTRERAS JULIETA ISADORA", "SALINAS SAAVEDRA EMILIANO IGNACIO", "SÁNCHEZ MORAGA NICOLÁS ARTURO", "SEISDEDOS CARVAJAL ANGELA GUADALUPE", "SEREY VALDES RENATO CLEMENTE", "SEYMOUR REYES TRINIDAD EMILIA", "VALLEJOS NAVARRO JOSEFA AGUSTINA", "VELOSO MUÑOZ ISABELLA AMARAL", "VERGARA FUENZALIDA JOAQUÍN IGNACIO", "VERGARA MARÍN DAMIÁN ALONSO", "VINES ZÚÑIGA DAMIÁN ALBERTO", "ZURITA BUSTOS ANTONIA INÉS"],
+    const database = {
+        "5thA": ["ARANEDA SEPÚLVEDA MATÍAS SANTIAGO", "AYALA OLIVARES MÁXIMO ALONSO", "CAMPUSANO PÉREZ ISIDORA MONTSERRAT", "CANESSA VEGA BERNARDO FRANCISCO", "CARRASCO RAMÍREZ JAVIERA PAZ", "CHAMORRO SAN MARTÍN SEBASTIÁN FRANCISCO", "CORREA LEAL SANTIAGO LEÓN", "CUKIC LUENGO BRUNO EDUARDO", "ESCOBAR FOSSA LEÓN ARTURO", "ESPINOZA OLIVARES LUCAS ALEJANDRO", "FERNÁNDEZ ESCOBAR MARTÍN FELIPE", "FERNÁNDEZ RODRIGUEZ FERNANDA NICOLE", "GARNIER VELÁSQUEZ MAXIMILIANO LORENZO", "GARZON MACUER AMANDA SOFÍA", "GONZÁLEZ ARRIAGADA SOFÍA ISIDORA", "IBARRA BARRAZA DOMINGA PAZ", "JARAMILLO CANALES JULIETA ANTONIA", "JIMÉNEZ MONSALVES FERNANDA PAZ", "MACUADA GONZÁLEZ TOMÁS ALONSO", "MEZA MISTO FRANCISCA IGNACIA", "MUÑOZ OLIVOS SOFÍA ANTONIA", "NECULQUEO MURA JAVIER MATIAS", "OSORIO MUÑOZ LUCIANO", "PARRA ALIAGA AGUSTÍN CLEMENTE LEÓN", "RIQUELME CONTRERAS JULIETA ISADORA", "SALINAS SAAVEDRA EMILIANO IGNACIO", "SÁNCHEZ MORAGA NICOLÁS ARTURO", "SEISDEDOS CARVAJAL ANGELA GUADALUPE", "SEREY VALDES RENATO CLEMENTE", "SEYMOUR REYES TRINIDAD EMILIA", "VALLEJOS NAVARRO JOSEFA AGUSTINA", "VELOSO MUÑOZ ISABELLA AMARAL", "VERGARA FUENZALIDA JOAQUÍN IGNACIO", "VERGARA MARÍN DAMIÁN ALONSO", "VINES ZÚÑIGA DAMIÁN ALBERTO", "ZURITA BUSTOS ANTONIA INÉS"],
         "5thB": ["ACUÑA ALARCÓN DOMINGO", "AGUILAR MENARES VALENTÍN IGNACIO", "ALLENDE GARAY ALFONSO ERNESTO", "ARA CAMPUSANO VALENTINA ANTONIA", "ARAYA ESCALONA JOSE MANUEL", "ÁVILA RAMÍREZ AMANDA", "BOBADILLA PONCE VICENTE IGNACIO", "CASTILLO CARVAJAL TRINIDAD PAZ", "CONTRERAS RAMOS AMANDA BELÉN", "DÍAZ CORTÉS NICOLÁS IGNACIO", "DURÁN FREZ FLORENCIA CATALINA", "FARÍAS VALENZUELA REBECCA ESPERANZA", "GARRIDO DONOSO AMANDA", "GÓMEZ BURGOS ROSARIO BELÉN", "GONZÁLEZ ESPINOZA ARANTZA MICAELA", "HOLZMANN CÁRCAMO ANTONIA IGNACIA", "LAZO DÍAZ RENATA ANDREA", "LÓPEZ OJEDA AGUSTÍN SANTIAGO", "MENESES MADARIAGA GASPAR BAUTISTA", "MORAGA MARTINEZ VICTORIA ESPERANZA", "MOSQUEIRA VALDIVIA CAMILO ANDRÉS", "ORMEÑO LACHR PEDRO JOAQUIN", "OSORNO ARRIAGADA AMANDA MARIANNE", "PARRA PIMENTEL CONSUELO EMILIA", "REYES MARCHANT EMILIANO BAUTISTA", "RIVERA SAAVEDRA DIEGO ANDRÉS", "ROMÁN PEÑA GUSTAVO EMILIO", "RUIZ GARCÍA SANTIAGO ALONSO", "RUZ REYES MATÍAS ALEJANDRO", "SARRIA ASTUDILLO EVA MAGDALENA", "TRUJILLO BURGOS SANTIAGO ALONSO", "URQUEJO CHACANO RAFAELA", "VALENZUELA GONZÁLEZ JOSÉ MIGUEL", "VÁSQUEZ TAPIA SOFÍA ANTONIA", "VILLANUEVA SIMON GASPAR ALBERTO", "ZAMORA TORRES FACUNDO AGUSTÍN"],
         "5thC": ["ABURTO FUENTEALBA IGNACIO ANDRÉS", "AGUILA MOSCOSO LÍA ISABELLA", "ALBORNOZ IBARRA LAURA ALEJANDRA", "ALEGRÍA RAMÍREZ JAVIERA IGNACIA", "APIOLAZA SCACCHI DIEGO ALEJANDRO", "BRANTE CATAFAU RAFAEL BAUTISTA", "BRUNAUD GALLARDO MARIA FERNANDA", "CADIU MELLA MAXIMILIANO IGNACIO", "CANTO MORAGA FELIPE", "CASTILLO MORALES VICENTE SALVADOR", "CASTRO CEPEDA RENATO", "CAVIERES PASMIÑO ROSARIO ISABEL", "CEPEDA PEDREROS CAMILO IGNACIO", "CONTRERAS CÁRDENAS JOSEFA IGNACIA", "CERDA OSSES RAFAEL ORLANDO", "CORTÉS JARA EMMA VALENTINA", "FECCI DUARTE GASPAR OLIVER", "FERNÁNDEZ SALINAS RAFAELA ANHAIS", "GARCÍA ANDRADE MAITE CELESTE", "GONZÁLEZ HERNÁNDEZ AGUSTINA PAZ", "GONZÁLEZ YÁÑEZ LUCIANO ALONSO", "HENRÍQUEZ LÓPEZ ANTONIO MIGUEL", "MORALES MORIS BERNARDO LEON", "MUÑOZ LEÓN MATILDE IGNACIA", "PAVEZ KNUST PEDRO ENRIQUE", "PIZARRO PAREDES ALONSO GABRIEL", "QUINTEROS MONDIGLIO LEONOR IGNACIA", "QUIROZ PÉREZ RAMIRO AGUSTÍN", "REYES BICHARA FRANCO FARID", "REYES CAÑAS JOAQUÍN ALEJANDRO", "RIQUELME ZÚÑIGA ISIDORA PAZ", "SALAZAR BELMAR AGUSTÍN ALONSO", "SANTOS ALVAREZ MIA SOPHIA", "TOBAR GONZÁLEZ FLORENCIA AYLIN", "VALENZUELA GONZÁLEZ GABRIEL IGNACIO", "VALLE FUENTES ELISA"]
     };
 
+    let mediaRecorder, audioChunks = [], duration = 0, timerInterval, audioBlob;
+
     window.onload = () => {
         const cs = document.getElementById('courseSelect');
-        Object.keys(database).forEach(c => {
-            let o = document.createElement('option'); o.value = c; o.innerHTML = c;
-            cs.appendChild(o);
-        });
+        Object.keys(database).forEach(c => { let o = document.createElement('option'); o.value = c; o.innerHTML = c; cs.appendChild(o); });
     };
 
     function updateStudentList() {
         const c = document.getElementById('courseSelect').value;
         const s = document.getElementById('studentSelect');
         s.innerHTML = '<option value="">-- Name --</option>';
-        if (c) {
-            s.disabled = false;
-            database[c].sort().forEach(n => {
-                let o = document.createElement('option'); o.value = n; o.innerHTML = n;
-                s.appendChild(o);
-            });
-        }
+        if (c) { s.disabled = false; database[c].sort().forEach(n => { let o = document.createElement('option'); o.value = n; o.innerHTML = n; s.appendChild(o); }); }
     }
 
     function consolidate() {
-        const t1 = document.getElementById('tip1').value;
-        const t2 = document.getElementById('tip2').value;
-        const t3 = document.getElementById('tip3').value;
-        const ref = document.getElementById('reflectionBox').value;
-        const fullText = `${t1} ${t2} ${t3} ${ref}`.trim();
-        document.getElementById('finalScript').innerText = fullText || "Start writing to generate your script...";
+        const text = `${document.getElementById('tip1').value} ${document.getElementById('tip2').value} ${document.getElementById('tip3').value} ${document.getElementById('reflectionBox').value}`.trim();
+        document.getElementById('finalScript').innerText = text || "Start writing above to generate your script...";
     }
 
-    const recordBtn = document.getElementById('recordBtn');
-    const timerDisplay = document.getElementById('timer');
-    const audioPlayback = document.getElementById('audioPlayback');
-
-    recordBtn.addEventListener('click', async () => {
+    document.getElementById('recordBtn').addEventListener('click', async function() {
         if (!mediaRecorder || mediaRecorder.state === 'inactive') {
-            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-            mediaRecorder = new MediaRecorder(stream);
-            audioChunks = [];
-            duration = 0;
-            mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
-            mediaRecorder.onstop = () => {
-                clearInterval(timerInterval);
-                audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
-                audioPlayback.src = URL.createObjectURL(audioBlob);
-                audioPlayback.style.display = 'block';
-            };
-            mediaRecorder.start();
-            recordBtn.innerText = "⏹️ STOP";
-            recordBtn.classList.add('recording');
-            timerInterval = setInterval(() => {
-                duration++;
-                let m = Math.floor(duration/60).toString().padStart(2,'0');
-                let s = (duration%60).toString().padStart(2,'0');
-                timerDisplay.innerText = `${m}:${s}`;
-                if (duration >= 30 && duration <= 60) timerDisplay.className = 'timer-good';
-                else if (duration > 60) timerDisplay.className = 'timer-long';
-            }, 1000);
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                mediaRecorder = new MediaRecorder(stream);
+                audioChunks = []; duration = 0;
+                mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
+                mediaRecorder.onstop = () => {
+                    clearInterval(timerInterval);
+                    audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                    document.getElementById('audioPlayback').src = URL.createObjectURL(audioBlob);
+                    document.getElementById('audioPlayback').style.display = 'block';
+                };
+                mediaRecorder.start();
+                this.innerText = "⏹️ STOP RECORDING"; this.classList.add('recording');
+                timerInterval = setInterval(() => {
+                    duration++;
+                    let m = Math.floor(duration/60).toString().padStart(2,'0'), s = (duration%60).toString().padStart(2,'0');
+                    document.getElementById('timer').innerText = `${m}:${s}`;
+                    document.getElementById('timer').className = (duration >= 30 && duration <= 60) ? 'timer-good' : (duration > 60 ? 'timer-long' : '');
+                }, 1000);
+            } catch (err) { alert("Microphone access denied!"); }
         } else {
-            mediaRecorder.stop();
-            recordBtn.innerText = "🔴 RE-RECORD";
-            recordBtn.classList.remove('recording');
+            mediaRecorder.stop(); this.innerText = "🔴 RE-RECORD"; this.classList.remove('recording');
         }
     });
 
-    async function finalSubmission() {
+    function finalSubmission() {
         const name = document.getElementById('studentSelect').value;
         const script = document.getElementById('finalScript').innerText;
+        if (!name || !audioBlob || duration < 30 || duration > 60) return alert("Validation Error: Please select your name, record 30-60 seconds, and write your script!");
+
+        // Download Audio
+        const a = document.createElement("a"); a.href = URL.createObjectURL(audioBlob); a.download = `Speaking_5th_${name.replace(/ /g, '_')}.wav`; a.click();
         
-        if (!name || script.length < 10 || !audioBlob) return alert("Complete all parts and record your voice!");
-        if (duration < 30 || duration > 60) return alert("Recording must be 30-60 seconds!");
+        // Download Word Report
+        const wordContent = `<html><head><meta charset='utf-8'></head><body><h2>SPEAKING CHALLENGE REPORT</h2><p><b>Student:</b> ${name}</p><hr><p><b>Consolidated Script:</b></p><p>${script}</p></body></html>`;
+        const b = new Blob(['\ufeff', wordContent], { type: 'application/msword' });
+        const l = document.createElement("a"); l.href = URL.createObjectURL(b); l.download = `Script_5th_${name.replace(/ /g, '_')}.doc`; l.click();
 
-        // 1. Descargar Audio
-        const audioLink = document.createElement("a");
-        audioLink.href = URL.createObjectURL(audioBlob);
-        audioLink.download = `Speaking_${name.replace(/ /g, '_')}.wav`;
-        audioLink.click();
-
-        // 2. Descargar Reporte Word
-        const header = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'></head><body>";
-        const content = `<h2>SPEAKING REPORT</h2><p><b>Student:</b> ${name}</p><hr><p><b>Script:</b> ${script}</p>`;
-        const wordBlob = new Blob(['\ufeff', header + content + "</body></html>"], { type: 'application/msword' });
-        const wordLink = document.createElement("a");
-        wordLink.href = URL.createObjectURL(wordBlob);
-        wordLink.download = `Script_${name.replace(/ /g, '_')}.doc`;
-        wordLink.click();
-
-        alert("✅ EXCELENTE TRABAJO. Se han descargado tu Audio y tu Guion. ¡No olvides enviárselos a tu profesor!");
+        alert("✅ SUCCESS! Your Audio and Script are downloaded. Please upload them to Classroom!");
         location.reload();
     }
 </script>
