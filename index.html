@@ -34,10 +34,9 @@
         .student-info { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
         select, textarea, input { width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; box-sizing: border-box; font-family: inherit; }
 
-        .guide-box { background: #fdf2e9; border-left: 5px solid var(--accent); padding: 15px; border-radius: 8px; margin-bottom: 20px; }
-        
         .step-item { background: #f9f9f9; padding: 15px; border-radius: 8px; margin-bottom: 10px; border: 1px solid #eee; }
         .step-item label { font-weight: bold; display: block; margin-bottom: 8px; color: #34495e; }
+        .practice-highlight { border-left: 5px solid var(--accent); background: #fdf2e9; }
 
         #reflectionBox { height: 180px; font-size: 1.05rem; resize: none; line-height: 1.6; }
         #mottoBox { font-weight: bold; color: var(--accent); text-align: center; font-size: 1.2rem; border-color: var(--accent); }
@@ -63,7 +62,7 @@
     <div id="blockMessage">⚠️ Task already submitted. Thank you!</div>
 
     <div class="video-section">
-        <p style="margin-bottom: 15px;">🎥 <b>Step 1:</b> Watch Abby's advice again before writing.</p>
+        <p style="margin-bottom: 15px;">🎥 <b>Step 1:</b> Watch Abby's advice and identify the tips.</p>
         <a href="https://drive.google.com/file/d/17kky1iczGlVTzWItCJVWJ4inlrqMY14S/view?usp=sharing" target="_blank" class="video-btn">▶️ OPEN VIDEO IN GOOGLE DRIVE</a>
     </div>
 
@@ -76,23 +75,26 @@
         </select>
     </div>
 
-    <div class="guide-box">
-        <strong>Help a friend!</strong> Explain Abby's 3 pillars: 
-        <i>Speak slowly, speak clearly, and practice makes perfect.</i>
+    <span class="section-title">Part 1: Identify the Tips</span>
+    
+    <div class="step-item">
+        <label>Tip 1: What is the first advice from Abby?</label>
+        <input type="text" id="tip1" placeholder="Write Tip 1 here...">
     </div>
 
-    <span class="section-title">Part 1: 3-Step Guide</span>
     <div class="step-item">
-        <label>1. Speak slowly and carefully. Why?</label>
-        <input type="text" id="step1" placeholder="Explain the importance of pace...">
+        <label>Tip 2: What is the second advice from Abby?</label>
+        <input type="text" id="tip2" placeholder="Write Tip 2 here...">
     </div>
+
     <div class="step-item">
-        <label>2. Speak loudly and clearly. Why?</label>
-        <input type="text" id="step2" placeholder="Explain why the audience needs to hear you...">
+        <label>Tip 3: What is the third advice from Abby?</label>
+        <input type="text" id="tip3" placeholder="Write Tip 3 here...">
     </div>
-    <div class="step-item">
-        <label>3. Practice makes perfect. How can we practice?</label>
-        <input type="text" id="step3" placeholder="Mention tools or people to practice with...">
+
+    <div class="step-item practice-highlight">
+        <label>💡 Practice makes perfect: How can we practice according to Abby?</label>
+        <textarea id="practiceExpl" style="height: 80px;" placeholder="Explain who we can practice with or what tools we can use..."></textarea>
     </div>
 
     <span class="section-title">Part 2: Personal Reflection (5-8 lines)</span>
@@ -145,44 +147,43 @@
         const blob = new Blob(['\ufeff', header + content + footer], { type: 'application/msword' });
         const link = document.createElement("a");
         link.href = URL.createObjectURL(blob);
-        link.download = `AbbyReflection_${name.replace(/ /g, '_')}.doc`;
+        link.download = `SpeechReflection_${name.replace(/ /g, '_')}.doc`;
         link.click();
     }
 
     async function finalSubmission() {
         const name = document.getElementById('studentSelect').value;
         const course = document.getElementById('courseSelect').value;
-        const s1 = document.getElementById('step1').value.trim();
-        const s2 = document.getElementById('step2').value.trim();
-        const s3 = document.getElementById('step3').value.trim();
+        const t1 = document.getElementById('tip1').value.trim();
+        const t2 = document.getElementById('tip2').value.trim();
+        const t3 = document.getElementById('tip3').value.trim();
+        const prac = document.getElementById('practiceExpl').value.trim();
         const reflect = document.getElementById('reflectionBox').value.trim();
         const motto = document.getElementById('mottoBox').value.trim();
 
-        if (!name || !s1 || !s2 || !s3 || !reflect || !motto) return alert("Please complete all sections!");
+        if (!name || !t1 || !t2 || !t3 || !prac || !reflect || !motto) return alert("Please fill all sections!");
 
-        const words = reflect.split(/\s+/).length;
-        if (words < 20) return alert("Your reflection is too short. Try to write a full paragraph (approx 5 lines)!");
-
-        const btn = document.getElementById('submitBtn');
-        btn.innerText = "Submitting..."; btn.disabled = true;
-
-        const summary = `GUIDE:\n1. ${s1}\n2. ${s2}\n3. ${s3}\n\nREFLECTION:\n${reflect}\n\nMOTTO: ${motto}`;
+        const summary = `TIPS IDENTIFIED:\n1. ${t1}\n2. ${t2}\n3. ${t3}\n\nPRACTICE EXPLANATION:\n${prac}\n\nREFLECTION:\n${reflect}\n\nMOTTO: ${motto}`;
 
         try {
+            const btn = document.getElementById('submitBtn');
+            btn.innerText = "Sending..."; btn.disabled = true;
+
             await fetch(scriptURL, { 
                 method: 'POST', mode: 'no-cors', 
-                body: JSON.stringify({ firstName: name, course: course + " - SPEECH REFLECTION", text: summary }) 
+                body: JSON.stringify({ firstName: name, course: course + " - TIPS REFLECTION", text: summary }) 
             });
 
-            const html = `<h2>PRESENTATION REFLECTION</h2><p><b>Student:</b> ${name}</p><hr><h3>Guide:</h3><p><b>Step 1:</b> ${s1}</p><p><b>Step 2:</b> ${s2}</p><p><b>Step 3:</b> ${s3}</p><h3>Personal Reflection:</h3><p>${reflect}</p><h3>Motto:</h3><p><b>"${motto}"</b></p>`;
+            const html = `<h2>PRESENTATION TIPS REFLECTION</h2><p><b>Student:</b> ${name}</p><hr><h3>Tips Identified:</h3><ol><li>${t1}</li><li>${t2}</li><li>${t3}</li></ol><h3>How to Practice:</h3><p>${prac}</p><h3>Personal Reflection:</h3><p>${reflect}</p><h3>Motto:</h3><p><b>"${motto}"</b></p>`;
             downloadWord(name, course, html);
 
             localStorage.setItem("speech_reflection_submitted", "true");
-            alert("✅ SUBMITTED! Your reflection is saved and downloaded.");
+            alert("✅ SUBMITTED! Your reflection was sent and downloaded.");
             location.reload();
         } catch (e) {
-            alert("Error sending. Please try again.");
-            btn.innerText = "Submit & Download Word"; btn.disabled = false;
+            alert("Error sending. Try again.");
+            document.getElementById('submitBtn').innerText = "Submit & Download Word";
+            document.getElementById('submitBtn').disabled = false;
         }
     }
 </script>
