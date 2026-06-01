@@ -33,6 +33,7 @@
         .step-item { background: #f9f9f9; padding: 15px; border-radius: 8px; margin-bottom: 12px; border: 1px solid #eee; }
         
         input, textarea, select { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; font-family: inherit; font-size: 14px; margin-bottom: 10px; }
+        textarea { height: 80px; resize: vertical; }
 
         /* SCRIPT CONSOLIDATION BOX */
         .script-container { background: #fff9e6; border: 2px solid #f39c12; padding: 20px; border-radius: 12px; margin-top: 25px; }
@@ -62,7 +63,7 @@
     </header>
 
     <div class="video-card">
-        <a href="https://drive.google.com/file/d/17kky1iczGlVTzWItCJVWJ4inlrqMY14S/view?usp=sharing" target="_blank" class="video-btn">▶️ WATCH VIDEO</a>
+        <a href="https://drive.google.com/file/d/14-PxkBF6xkqbxbA26tTF2dxHIVKjAIAl/view?usp=sharing" target="_blank" class="video-btn">▶️ WATCH VIDEO</a>
     </div>
 
     <div class="toolbox">
@@ -85,15 +86,22 @@
 
     <span class="section-title">Step 1: Complete your notes</span>
     <div class="step-item">
-        <input type="text" id="tip1" oninput="consolidate()" placeholder="Tip 1: Abby always says...">
-        <input type="text" id="tip2" oninput="consolidate()" placeholder="Tip 2: Moreover, she suggests...">
-        <input type="text" id="tip3" oninput="consolidate()" placeholder="Tip 3: In addition, it is important to...">
-        <textarea id="reflectionBox" oninput="consolidate()" placeholder="In my opinion, I usually practice with... but sometimes I..."></textarea>
+        <p style="margin: 0 0 5px 0; font-size: 0.85rem; color: #7f8c8d;"><b>Tip 1:</b> Abby always says...</p>
+        <input type="text" id="tip1" oninput="consolidate()" placeholder="e.g., that we need to maintain eye contact with the camera.">
+        
+        <p style="margin: 10px 0 5px 0; font-size: 0.85rem; color: #7f8c8d;"><b>Tip 2:</b> Moreover, she suggests...</p>
+        <input type="text" id="tip2" oninput="consolidate()" placeholder="e.g., practicing our breath control before speaking.">
+        
+        <p style="margin: 10px 0 5px 0; font-size: 0.85rem; color: #7f8c8d;"><b>Tip 3:</b> In addition, it is important to...</p>
+        <input type="text" id="tip3" oninput="consolidate()" placeholder="e.g., speak clearly and not too fast.">
+        
+        <p style="margin: 10px 0 5px 0; font-size: 0.85rem; color: #7f8c8d;"><b>Your Reflection:</b></p>
+        <textarea id="reflectionBox" oninput="consolidate()" placeholder="e.g., In my opinion, I usually practice with my friends, but sometimes I get nervous in front of the class."></textarea>
     </div>
 
     <div class="script-container">
         <h3 style="margin-top:0; color:#d35400; font-size:1rem; text-transform: uppercase;">📝 Your Speaking Script (Ready to record):</h3>
-        <div id="finalScript">Start writing to generate your script...</div>
+        <div id="finalScript">Start writing above to generate your script...</div>
     </div>
 
     <span class="section-title">Step 2: Voice Recording (30-60s)</span>
@@ -129,8 +137,18 @@
     }
 
     function consolidate() {
-        const text = `${document.getElementById('tip1').value} ${document.getElementById('tip2').value} ${document.getElementById('tip3').value} ${document.getElementById('reflectionBox').value}`.trim();
-        document.getElementById('finalScript').innerText = text || "Start writing above to generate your script...";
+        const t1 = document.getElementById('tip1').value.trim();
+        const t2 = document.getElementById('tip2').value.trim();
+        const t3 = document.getElementById('tip3').value.trim();
+        const ref = document.getElementById('reflectionBox').value.trim();
+
+        let compiledText = "";
+        if (t1) compiledText += `Abby always says ${t1} `;
+        if (t2) compiledText += `Moreover, she suggests ${t2} `;
+        if (t3) compiledText += `In addition, it is important to ${t3} `;
+        if (ref) compiledText += ref;
+
+        document.getElementById('finalScript').innerText = compiledText.trim() || "Start writing above to generate your script...";
     }
 
     document.getElementById('recordBtn').addEventListener('click', async function() {
@@ -154,7 +172,7 @@
                     document.getElementById('timer').innerText = `${m}:${s}`;
                     document.getElementById('timer').className = (duration >= 30 && duration <= 60) ? 'timer-good' : (duration > 60 ? 'timer-long' : '');
                 }, 1000);
-            } catch (err) { alert("Microphone access denied!"); }
+            } catch (err) { alert("Microphone access denied! Make sure you allow mic permissions."); }
         } else {
             mediaRecorder.stop(); this.innerText = "🔴 RE-RECORD"; this.classList.remove('recording');
         }
@@ -163,18 +181,35 @@
     function finalSubmission() {
         const name = document.getElementById('studentSelect').value;
         const script = document.getElementById('finalScript').innerText;
-        if (!name || !audioBlob || duration < 30 || duration > 60) return alert("Validation Error: Please select your name, record 30-60 seconds, and write your script!");
-
-        // Download Audio
-        const a = document.createElement("a"); a.href = URL.createObjectURL(audioBlob); a.download = `Speaking_5th_${name.replace(/ /g, '_')}.wav`; a.click();
         
-        // Download Word Report
-        const wordContent = `<html><head><meta charset='utf-8'></head><body><h2>SPEAKING CHALLENGE REPORT</h2><p><b>Student:</b> ${name}</p><hr><p><b>Consolidated Script:</b></p><p>${script}</p></body></html>`;
-        const b = new Blob(['\ufeff', wordContent], { type: 'application/msword' });
-        const l = document.createElement("a"); l.href = URL.createObjectURL(b); l.download = `Script_5th_${name.replace(/ /g, '_')}.doc`; l.click();
+        if (!name) return alert("Validation Error: Please select your Class and Name!");
+        if (script.startsWith("Start writing") || script === "") return alert("Validation Error: Please write your tips first!");
+        if (!audioBlob) return alert("Validation Error: You haven't recorded your voice yet!");
+        if (duration < 30 || duration > 60) return alert(`Validation Error: Your recording is ${duration} seconds. It must be between 30 and 60 seconds long!`);
 
-        alert("✅ SUCCESS! Your Audio and Script are downloaded. Please upload them to Classroom!");
-        location.reload();
+        // Download Audio File Safely
+        const audioUrl = URL.createObjectURL(audioBlob);
+        const a = document.createElement("a"); 
+        a.href = audioUrl; 
+        a.download = `Speaking_5th_${name.replace(/ /g, '_')}.wav`; 
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        
+        // Download Microsoft Word Report with proper XML headers
+        const wordContent = `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'></head><body><h2>SPEAKING CHALLENGE REPORT</h2><p><b>Student:</b> ${name}</p><hr><p><b>Consolidated Script:</b></p><p>${script}</p></body></html>`;
+        const b = new Blob(['\ufeff', wordContent], { type: 'application/msword' });
+        const l = document.createElement("a"); 
+        l.href = URL.createObjectURL(b); 
+        l.download = `Script_5th_${name.replace(/ /g, '_')}.doc`; 
+        document.body.appendChild(l);
+        l.click();
+        document.body.removeChild(l);
+
+        alert("✅ SUCCESS!\n\nYour Audio (.wav) and Script (.doc) have been downloaded to your computer.\n\nPlease upload BOTH files to Google Classroom now!");
+        
+        // Safety Change: Inform user instead of doing a hard page reload which breaks downloads on slow devices.
+        document.getElementById('submitBtn').innerText = "🎉 DOWNLOADED! (Click to download again)";
     }
 </script>
 </body>
